@@ -1,0 +1,21 @@
+p {
+  margin: 10px;
+}
+
+#presenter-slides {
+ overflow: auto;
+  display: block;
+  margin-top: -10px;
+  margin-left: -17px;
+  border: 0;
+  width : 100%;
+  height: 25%;
+}
+
+#presenter-notes {
+  font-size: 26px;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+ 
+}

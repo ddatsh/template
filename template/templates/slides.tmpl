@@ -1,0 +1,70 @@
+{{define "root"}}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{.Title}}</title>
+    <meta charset='utf-8'>
+    <script>
+      var notesEnabled = {{.NotesEnabled}};
+    </script>
+    <script src='/static/slides.js'></script>
+    <script src='/static/pretty.js'></script>
+    {{if .NotesEnabled}}
+    <script>
+      var sections = {{.Sections}};
+      var titleNotes = {{.TitleNotes}}
+    </script>
+    <script src='/static/notes.js'></script>
+    {{end}}
+ 
+  </head>
+
+  <body style='display: none'>
+    <section class='slides layout-widescreen'>
+      <article>
+     <center>
+        <h1>{{.Title}}</h1>
+        {{with .Subtitle}}<h3>{{.}}</h3>{{end}}
+        {{if not .Time.IsZero}}<h3>{{.Time.Format "2006-1-2"}}</h3>{{end}}
+        {{range .Authors}}
+          <div class="presenter">
+            {{range .Elem}}{{elem $.Template .}}{{end}}
+        </center>
+          </div>
+        {{end}}
+      </article>
+
+{{$total:=len .Sections}}
+
+  {{range $i, $s := .Sections}}
+  <!-- start of slide {{$s.Number}} -->
+
+      <article {{$s.HTMLAttributes}}>
+      {{if $s.Elem}}
+        <h3>{{$s.Title}}</h3>
+        {{range $s.Elem}}{{elem $.Template .}}{{end}}
+      {{else}}
+        <h2>{{$s.Title}}</h2>
+      {{end}}
+        <div class="pagenumber"> {{inc2 $i }} /{{inc $total}} </div>
+      </article>
+  <!-- end of slide {{$i}} -->
+  {{end}}{{/* of Slide block */}}
+
+    </section>
+
+    <div id="help">
+   键盘左右方向切换
+    </div>
+
+    {{if .PlayEnabled}}
+    <script src='/play.js'></script>
+    {{end}}
+
+  </body>
+</html>
+{{end}}
+
+{{define "newline"}}
+<br>
+{{end}}
